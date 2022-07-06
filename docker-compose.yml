@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+
+    app:
+        # build: ./services/postgres
+        image: alialfredji/video-partial-content
+        ports:
+            - 8080:8080
+        restart: always
+
+    stuffer:
+        image: marcopeg/stuffer:0.0.1
+        ports:
+            - 8888:8080
+        environment:
+            LOG_LEVEL: verbose
+            DOWNLOAD_BASE_URL: http://localhost:8888
+            UPLOAD_MOUNT_POINT: /
+            #AUTH_ENABLE_ANONYMOUS_UPLOAD: false
+            JWT_SECRET: stuffer
+        volumes:
+            - ./data/stuffer:/var/lib/stuffer/data
